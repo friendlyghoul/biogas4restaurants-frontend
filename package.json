@@ -1,0 +1,22 @@
+{
+  "name": "biogas4restaurants-frontend",
+  "version": "1.0.0",
+  "description": "Biogas4Restaurants - Open Source Energy Resilience PWA for Indian Cloud Kitchens",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "generate-icons": "npx @vite-pwa/assets-generator --preset minimal public/favicon.svg"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.0",
+    "vite-plugin-pwa": "^0.20.0",
+    "workbox-window": "^7.1.0"
+  }
+}
