@@ -30,6 +30,14 @@ const GLOBAL_STYLES = `
   .btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#52b788;border:1px solid #52b788;padding:13px 26px;border-radius:40px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s}
   .btn-outline:hover{background:rgba(82,183,136,0.09);transform:translateY(-2px)}
 
+  .lightbox-overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,0.92);display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out;animation:fade-in 0.2s ease}
+  .lightbox-overlay img{max-width:95vw;max-height:90vh;object-fit:contain;border-radius:8px;cursor:default}
+  .lightbox-close{position:fixed;top:16px;right:20px;background:rgba(255,255,255,0.12);border:none;color:#fff;font-size:28px;width:44px;height:44px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10000;transition:background 0.2s}
+  .lightbox-close:hover{background:rgba(255,255,255,0.25)}
+  .lightbox-hint{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,0.55);color:rgba(255,255,255,0.7);font-size:11px;padding:4px 10px;border-radius:6px;pointer-events:none;opacity:0;transition:opacity 0.2s}
+  .infographic-wrap:hover .lightbox-hint{opacity:1}
+  @keyframes fade-in{from{opacity:0}to{opacity:1}}
+
   @keyframes bounce-y{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
   @keyframes dot-scroll{0%{transform:translateY(0);opacity:1}100%{transform:translateY(14px);opacity:0}}
 `;
@@ -54,6 +62,7 @@ function Section({ id, children, style = {}, innerStyle = {} }) {
 export default function LandingPage() {
   const [lang, setLang] = useState("en");
   const [scrolled, setScrolled] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const L = LANGUAGES[lang];
   const C = L.content;
 
@@ -165,7 +174,7 @@ export default function LandingPage() {
           </div>
 
           {/* Language-switching infographic */}
-          <div style={{ borderRadius: 18, overflow: "hidden", border: "1px solid rgba(82,183,136,0.13)", background: "rgba(82,183,136,0.02)" }}>
+          <div className="infographic-wrap" style={{ borderRadius: 18, overflow: "hidden", border: "1px solid rgba(82,183,136,0.13)", background: "rgba(82,183,136,0.02)", cursor: "zoom-in", position: "relative" }} onClick={() => setLightboxOpen(true)}>
             <div style={{ padding: "10px 16px", background: "rgba(82,183,136,0.07)", borderBottom: "1px solid rgba(82,183,136,0.1)", fontSize: 11, color: "rgba(232,245,233,0.4)" }}>
               🌿 {L.flag} {L.label} — Open Source Framework · NotebookLM
             </div>
@@ -175,6 +184,7 @@ export default function LandingPage() {
               alt={`Biogas infographic in ${L.label}`}
               style={{ width: "100%", display: "block" }}
             />
+            <div className="lightbox-hint">Click to enlarge</div>
           </div>
         </div>
       </Section>
@@ -301,6 +311,18 @@ export default function LandingPage() {
         </div>
         <div style={{ marginTop: 20, fontSize: 11, color: "rgba(232,245,233,0.14)" }}>{C.footerSub}</div>
       </footer>
+
+      {/* ── LIGHTBOX MODAL ───────────────────────────────────────────────── */}
+      {lightboxOpen && (
+        <div className="lightbox-overlay" onClick={() => setLightboxOpen(false)}>
+          <button className="lightbox-close" onClick={() => setLightboxOpen(false)} aria-label="Close">×</button>
+          <img
+            src={`/images/${IMAGE_FILES[L.imageIndex]}`}
+            alt={`Biogas infographic in ${L.label}`}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 }

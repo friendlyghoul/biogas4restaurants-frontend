@@ -12,6 +12,7 @@ export const IMAGE_FILES = [
   "infographic-ml2.png",  // 4 - Malayalam (version 2)
   "infographic-kn.png",   // 5 - Kannada
   "infographic-ml3.png",  // 6 - Malayalam (dark IoT version)
+  "infographic-ta.png",   // 7 - Tamil
 ];
 
 export const LANGUAGES = {
@@ -133,7 +134,7 @@ export const LANGUAGES = {
     label: "தமிழ்",
     flag: "🇮🇳",
     videoId: "SR7jDzZ0HCw",
-    imageIndex: 0,
+    imageIndex: 7,
     content: {
       badge: "திறந்த மூலம் · இலவசம் · காப்புரிமை இல்லை",
       tagline: "பயோகேஸ் உங்களிடம் வர முடியாவிட்டால் —",
